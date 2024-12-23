@@ -1,107 +1,36 @@
-/* *******************************************************************************************
- *                                                                                           *
- * Please read the following tutorial before implementing tasks:                             *
- * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Looping_code    *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration         *
- * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/conditionals    *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else    *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch       *
- *                                                                                           *
- ******************************************************************************************* */
-
-/**
- * Determines whether a given number is positive. Zero is considered positive.
- * This function does not use Number or Math class methods.
- *
- * @param {number} number - The number to check.
- * @return {boolean} True if the number is positive or zero, false otherwise.
- *
- * @example:
- *  10 => true
- *  0  => true
- *  -5 => false
- */
 function isPositive(number) {
-  return number >= 0 ? true : false;
+  return number >= 0;
 }
 
-/**
- * Returns the maximum of three numbers without using Array and Math classes methods.
- *
- * @param {number} a - The first number.
- * @param {number} b - The second number.
- * @param {number} c - The third number.
- * @return {number} The maximum of the three numbers.
- *
- * @example:
- *  1, 2, 3       => 3
- *  -5, 0, 5      => 5
- *  -0.1, 0, 0.2  => 0.2
- */
-function getMaxNumber(/* a, b, c */) {
-  throw new Error('Not implemented');
+function getMaxNumber(a, b, c) {
+  if (a >= b && a >= c) return a;
+  if (b >= a && b >= c) return b;
+  return c;
 }
 
-/**
- * Checks if a queen can capture a king in the next move on an 8x8 chessboard.
- * See more details at https://en.wikipedia.org/wiki/Queen_(chess)
- *
- * @typedef {{
- *  x: number,
- *  y: number
- * }} Position
- * @param {Object} queen - The position of the queen.
- * @param {Object} king - The position of the king.
- * @return {boolean} True if the queen can capture the king, false otherwise.
- *
- * @example
- * {x: 1, y: 1}, {x: 5, y: 5} => true
- * {x: 2, y: 1}, {x: 2, y: 8} => true
- * {x: 1, y: 1}, {x: 2, y: 8} => false
- * {x: 1, y: 1}, {x: 2, y: 8} => false
- */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  const intersectionRow = queen.x === king.x;
+  const intersectionCol = queen.y === king.y;
+  const intersectionDiag =
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y);
+
+  return intersectionRow || intersectionCol || intersectionDiag;
 }
 
-/**
- * Determines whether a triangle is isosceles based on its side lengths.
- * In this task, the use of methods of the String and Array classes is not allowed.
- *
- * @param {number} a - The length of the first side.
- * @param {number} b - The length of the second side.
- * @param {number} c - The length of the third side.
- * @return {boolean} True if the triangle is isosceles, false otherwise.
- *
- * @example:
- *  1, 2, 3   => false
- *  3, 1, 2   => false
- *  2, 3, 2   => true
- *  3, 2, 2   => true
- *  2, 2, 3   => true
- *  2, 2, 5   => false
- *  3, 0, 3   => false
- */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a + b < c || a + c < b || b + c < a || a <= 0 || b <= 0 || c <= 0)
+    return false;
+  return a === b || a === c || b === c;
 }
 
-/**
- * Converts a number to Roman numerals. The number will be between 1 and 39.
- * In this task, the use of methods of the String and Array classes is not allowed.
- *
- * @param {number} num - The number to convert.
- * @return {string} The Roman numeral representation of the number.
- *
- * @example:
- *  1   => I
- *  2   => II
- *  5   => V
- *  10  => X
- *  26  => XXVI
- */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const numArr = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+  const str = '';
+  if (num <= 10) return numArr[num - 1];
+  return (
+    str.repeat('X', Math.floor(num / 10)) +
+    numArr[num - Math.floor(num / 10) * 11]
+  );
 }
 
 /**
