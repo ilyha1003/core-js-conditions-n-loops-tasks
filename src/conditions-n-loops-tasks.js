@@ -24,85 +24,96 @@ function isIsoscelesTriangle(a, b, c) {
 }
 
 function convertToRomanNumerals(num) {
-  const numArr = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
-  const str = '';
-  if (num <= 10) return numArr[num - 1];
-  return (
-    str.repeat('X', Math.floor(num / 10)) +
-    numArr[num - Math.floor(num / 10) * 11]
-  );
+  const values = [100, 90, 50, 40, 10, 9, 5, 4, 1];
+  const symbols = ['C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+
+  let result = '';
+  let i = 0;
+  let number = num;
+
+  while (number > 0) {
+    if (number >= values[i]) {
+      result += symbols[i];
+      number -= values[i];
+    } else i += 1;
+  }
+
+  return result;
 }
 
-/**
- * Converts a number to a string, replacing digits with words.
- * In this task, the use of methods of the String and Array classes is not allowed.
- *
- * @param {string} numberStr - The number as a string.
- * @return {string} The number with digits replaced by words.
- *
- * @example:
- *  '1'       => 'one'
- *  '10'      => 'one zero'
- *  '-10'     => 'minus one zero'
- *  '10.5'    => 'one zero point five'
- *  '10,5'    => 'one zero point five'
- *  '1950.2'  => 'one nine five zero point two'
- */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let res = '';
+
+  for (let i = 0; i < numberStr.length; i += 1) {
+    switch (numberStr[i]) {
+      case ',':
+        res += 'point ';
+        break;
+      case '.':
+        res += 'point ';
+        break;
+      case '0':
+        res += 'zero ';
+        break;
+      case '1':
+        res += 'one ';
+        break;
+      case '2':
+        res += 'two ';
+        break;
+      case '3':
+        res += 'three ';
+        break;
+      case '4':
+        res += 'four ';
+        break;
+      case '5':
+        res += 'five ';
+        break;
+      case '6':
+        res += 'six ';
+        break;
+      case '7':
+        res += 'seven ';
+        break;
+      case '8':
+        res += 'eight ';
+        break;
+      case '9':
+        res += 'nine ';
+        break;
+      default:
+        res += 'minus ';
+        break;
+    }
+  }
+
+  let finalStr = '';
+  for (let i = 0; i < res.length - 1; i += 1) {
+    finalStr += res[i];
+  }
+  return finalStr;
 }
 
-/**
- * Determines whether a string is a palindrome.
- * In this task, the use of methods of the String and Array classes is not allowed.
- *
- * @param {string} str - The string to check.
- * @return {boolean} True if the string is a palindrome, false otherwise.
- *
- * @example:
- *  'abcba'     => true
- *  '0123210'   => true
- *  'qweqwe'    => false
- */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i < str.length / 2; i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) return false;
+  }
+  return true;
 }
 
-/**
- * Finds the first occurrence of a letter in a string.
- * In this task, the use of methods of the String and Array classes is not allowed.
- *
- * @param {string} str - The string to search.
- * @param {string} letter - The letter to find.
- * @return {number} The index of the first occurrence of the letter, or -1 if not found.
- *
- * @example:
- *  'qwerty', 'q'     => 0
- *  'qwerty', 't'     => 4
- *  'qwerty', 'Q'     => -1
- *  'qwerty', 'p'     => -1
- */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) return i;
+  }
+  return -1;
 }
 
-/**
- * Checks if a number contains a specific digit.
- * In this task, the use of methods of the String and Array classes is not allowed.
- *
- * @param {number} num - The number to check.
- * @param {number} digit - The digit to search for.
- * @return {boolean} True if the number contains the digit, false otherwise.
- *
- * @example:
- *  123450, 5   => true
- *  123450, 1   => true
- *  123450, 0   => true
- *  12345, 0    => false
- *  12345, 6    => false
- */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  for (let i = 0; i < String(num).length; i += 1) {
+    if (String(num)[i] === String(digit)) return true;
+  }
+  return false;
 }
 
 /**
@@ -118,8 +129,10 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  for (let i = 0; i < arr.length; i += 1) {
+    
+  }
 }
 
 /**
