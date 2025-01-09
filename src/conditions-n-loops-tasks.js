@@ -181,10 +181,6 @@ function getSpiralMatrix(size) {
 }
 
 function rotateMatrix(matrix) {
-  if (!matrix || matrix.length === 0) {
-    return [];
-  }
-
   const newMatrix = matrix;
   const n = newMatrix.length;
 
@@ -201,43 +197,93 @@ function rotateMatrix(matrix) {
   return newMatrix;
 }
 
-/**
- * Sorts an array of numbers in ascending order in place.
- * Employ any sorting algorithm of your choice.
- * Take into account that the array can be very large. Consider how you can optimize your solution.
- * In this task, the use of methods of the Array and String classes is not allowed.
- *
- * @param {number[]} arr - The array to sort.
- * @return {number[]} The sorted array.
- *
- * @example:
- *  [2, 9, 5]       => [2, 5, 9]
- *  [2, 9, 5, 9]    => [2, 5, 9, 9]
- *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
- */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const sortedArr = arr;
+
+  for (let i = 1; i < arr.length; i += 1) {
+    const current = sortedArr[i];
+    let j = i - 1;
+
+    while (j >= 0 && arr[j] > current) {
+      sortedArr[j + 1] = sortedArr[j];
+      j -= 1;
+    }
+    sortedArr[j + 1] = current;
+  }
+
+  return sortedArr;
 }
 
-/**
- * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
- * Take into account that the string can be very long and the number of iterations is large. Consider how you can optimize your solution.
- * Usage of Array class methods is not allowed in this task.
- *
- * @param {string} str - The string to shuffle.
- * @param {number} iterations - The number of iterations to perform the shuffle.
- * @return {string} The shuffled string.
- *
- * @example:
- *  '012345', 1 => '024135'
- *  'qwerty', 1 => 'qetwry'
- *  '012345', 2 => '024135' => '043215'
- *  'qwerty', 2 => 'qetwry' => 'qtrewy'
- *  '012345', 3 => '024135' => '043215' => '031425'
- *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
- */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  if (!str || iterations <= 0) {
+    return str;
+  }
+
+  const len = str.length;
+  const visited = {};
+  let currentStr = str;
+  let cycleFound = false;
+  let cycleStartIteration = 0;
+  let cycleLength = 0;
+
+  for (let iteration = 0; iteration < iterations; iteration += 1) {
+    let evenChars = '';
+    let oddChars = '';
+
+    for (let i = 0; i < len; i += 1) {
+      if (i % 2 === 0) {
+        evenChars += currentStr[i];
+      } else {
+        oddChars += currentStr[i];
+      }
+    }
+
+    currentStr = evenChars + oddChars;
+
+    if (visited[currentStr]) {
+      cycleFound = true;
+      cycleStartIteration = visited[currentStr];
+      cycleLength = iteration - cycleStartIteration;
+      break;
+    }
+    visited[currentStr] = iteration;
+  }
+
+  if (cycleFound) {
+    const remainingIterations =
+      (iterations - cycleStartIteration) % cycleLength;
+
+    currentStr = str;
+    for (let i = 0; i < cycleStartIteration; i += 1) {
+      let evenChars = '';
+      let oddChars = '';
+      for (let j = 0; j < len; j += 1) {
+        if (j % 2 === 0) {
+          evenChars += currentStr[j];
+        } else {
+          oddChars += currentStr[j];
+        }
+      }
+      currentStr = evenChars + oddChars;
+    }
+
+    for (let i = 0; i < remainingIterations; i += 1) {
+      let evenChars = '';
+      let oddChars = '';
+      for (let j = 0; j < len; j += 1) {
+        if (j % 2 === 0) {
+          evenChars += currentStr[j];
+        } else {
+          oddChars += currentStr[j];
+        }
+      }
+      currentStr = evenChars + oddChars;
+    }
+
+    return currentStr;
+  }
+
+  return currentStr;
 }
 
 /**
@@ -257,8 +303,42 @@ function shuffleChar(/* str, iterations */) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const digitsArr = [];
+  let temp = number;
+
+  while (temp > 0) {
+    digitsArr.push(temp % 10);
+    temp = Math.floor(temp / 10);
+  }
+
+  digitsArr.reverse();
+
+  const n = digitsArr.length;
+
+  let i = n - 2;
+  while (i >= 0 && digitsArr[i] >= digitsArr[i + 1]) i -= 1;
+
+  let j = n - 1;
+  while (j > 1 && digitsArr[j] <= digitsArr[i]) j -= 1;
+
+  [digitsArr[i], digitsArr[j]] = [digitsArr[j], digitsArr[i]];
+
+  let left = i + 1;
+  let right = n - 1;
+
+  while (left < right) {
+    [digitsArr[left], digitsArr[right]] = [digitsArr[right], digitsArr[left]];
+    left += 1;
+    right -= 1;
+  }
+
+  let res = 0;
+  for (let k = 0; k < digitsArr.length; k += 1) {
+    res = res * 10 + digitsArr[k];
+  }
+
+  return res;
 }
 
 module.exports = {
