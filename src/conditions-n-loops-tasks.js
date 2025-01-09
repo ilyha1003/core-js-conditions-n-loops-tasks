@@ -116,67 +116,89 @@ function isContainNumber(num, digit) {
   return false;
 }
 
-/**
- * Finds the index of an element in an array where the sum of elements to the left equals the sum of elements to the right.
- * If such an index does not return -1.
- * In this task, the use of methods of the Array and String classes is not allowed.
- *
- * @param {number[]} arr - The array to check.
- * @return {number} The index of the balance point, or -1 if none exists.
- *
- * @example:
- *  [1, 2, 5, 3, 0] => 2    => 1 + 2 === 3 + 0 then balance element is 5 and its index = 2
- *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
- *  [1, 2, 3, 4, 5] => -1   => no balance element
- */
 function getBalanceIndex(arr) {
   for (let i = 0; i < arr.length; i += 1) {
-    
+    let leftPart = 0;
+    let rightPart = 0;
+
+    for (let j = 0; j < i; j += 1) {
+      leftPart += arr[j];
+    }
+
+    for (let n = i + 1; n < arr.length; n += 1) {
+      rightPart += arr[n];
+    }
+
+    if (leftPart === rightPart) return i;
   }
+
+  return -1;
 }
 
-/**
- * Generates a spiral matrix of a given size, filled with numbers in ascending order starting from one.
- * The direction of filling with numbers is clockwise.
- * Usage of String and Array classes methods is not allowed in this task.
- *
- * @param {number} size - The size of the matrix.
- * @return {number[][]} The spiral matrix.
- *
- * @example:
- *        [
- *          [1, 2, 3],
- *  3  =>   [8, 9, 4],
- *          [7, 6, 5]
- *        ]
- *        [
- *          [1,  2,  3,  4],
- *  4  =>   [12, 13, 14, 5],
- *          [11, 16, 15, 6],
- *          [10, 9,  8,  7]
- *        ]
- */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = new Array(size);
+
+  for (let i = 0; i < matrix.length; i += 1) {
+    matrix[i] = new Array(size);
+    for (let j = 0; j < matrix[i].length; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+
+  let num = 0;
+  let top = 0;
+  let bottom = size - 1;
+  let left = 0;
+  let right = size - 1;
+
+  while (top <= bottom && left <= right) {
+    for (let i = left; i <= right; i += 1) {
+      num += 1;
+      matrix[top][i] = num;
+    }
+    top += 1;
+
+    for (let i = top; i <= bottom; i += 1) {
+      num += 1;
+      matrix[i][right] = num;
+    }
+    right -= 1;
+
+    for (let i = right; i >= left; i -= 1) {
+      num += 1;
+      matrix[bottom][i] = num;
+    }
+    bottom -= 1;
+
+    for (let i = bottom; i >= top; i -= 1) {
+      num += 1;
+      matrix[i][left] = num;
+    }
+    left += 1;
+  }
+
+  return matrix;
 }
 
-/**
- * Rotates a matrix by 90 degrees clockwise in place.
- * Take into account that the matrix size can be very large. Consider how you can optimize your solution.
- * Usage of String and Array class methods is not allowed in this task.
- *
- * @param {number[][]} matrix - The matrix to rotate.
- * @return {number[][]} The rotated matrix.
- *
- * @example:
- *  [                 [
- *    [1, 2, 3],        [7, 4, 1],
- *    [4, 5, 6],  =>    [8, 5, 2],
- *    [7, 8, 9]         [9, 6, 3]
- *  ]                 ]
- */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  if (!matrix || matrix.length === 0) {
+    return [];
+  }
+
+  const newMatrix = matrix;
+  const n = newMatrix.length;
+
+  for (let i = 0; i < n / 2; i += 1) {
+    for (let j = i; j < n - 1 - i; j += 1) {
+      const temp = newMatrix[i][j];
+      newMatrix[i][j] = newMatrix[n - 1 - j][i];
+      newMatrix[n - 1 - j][i] = newMatrix[n - 1 - i][n - 1 - j];
+      newMatrix[n - 1 - i][n - 1 - j] = newMatrix[j][n - 1 - i];
+      newMatrix[j][n - 1 - i] = temp;
+    }
+  }
+
+  return newMatrix;
 }
 
 /**
